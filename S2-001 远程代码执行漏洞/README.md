@@ -4,3 +4,4 @@ WebWork 2.1+ 和 Struts 2 的 “altSyntax” 功能允许将 OGNL 表达式插�
 
 单个检测：python3 .\CVE-2007-4556-POC.py -t "http://0.0.0.0:1234/"
 批量检测：python3 .\CVE-2007-4556-POC.py -f "url.txt"
+漏洞利用代码为，编译合适的版本，根据提示输入地址和命令
