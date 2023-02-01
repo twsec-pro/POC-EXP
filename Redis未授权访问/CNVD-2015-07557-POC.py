@@ -61,7 +61,44 @@ def check(target,port):
 
 
         
+def checkfile(target,port):
+    #检测redis未授权访问漏洞
+    
+    try:
+        #建立redis连接
+        r = redis.Redis(host=target, port=port, db=0, socket_timeout=3, socket_connect_timeout=3, password=None, encoding='utf-8', encoding_errors='strict', charset=None, errors=None, unix_socket_path=None)
+        #获取redis info信息
 
+        info = r.info()
+        
+        if info:
+            print(info)
+            #换行
+            print('+++++++++++++++++++++++++++++++++++++ ')
+            print(target + '存在redis未授权访问漏洞！')
+            print('+++++++++++++++++++++++++++++++++++++ ')
+            
+            #保存到文件换行
+            f = open('res.txt', 'a')
+            f.write(target + ':' + port+'存在redis未授权访问漏洞！' + '\n' )
+            
+            
+            #info信息写入文件
+            f.write(str(info) + '\n' )
+            f.close()
+
+
+
+            
+            
+
+
+        else:
+            print('+++++++++++++++++++++++++++++++++++++ ')
+            print(target + '不存在redis未授权访问漏洞！')
+            print('+++++++++++++++++++++++++++++++++++++ ')
+    except:
+        print("请求出错"+target + '可能不存在redis未授权访问漏洞！')
         
 
     
@@ -84,7 +121,7 @@ if __name__ == '__main__':
             target = sys.argv[2]
             port = sys.argv[4]
         
-            check(target,port)
+            checkfile(target,port)
             sys.exit()
         
         #如果用户输入-f则执行批量检测
